@@ -1,0 +1,28 @@
+name: Docker
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 1 */1 *' # Every month
+  workflow_dispatch: # Allow manual triggering
+
+env:
+  REPO: gianlu33/reactive-base
+
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@master
+    -
+      name: Build
+      id: build
+      uses: gianlu33/Publish-Docker-Github-Action@main
+      with:
+        name: ${{ env.REPO }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        cache: ${{ github.event_name != 'schedule' }}
+        tag_names: true
