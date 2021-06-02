@@ -11,7 +11,7 @@ env:
   REPO: gianlu33/reactive-base
 
 jobs:
-  build-test-publish:
+  build:
     runs-on: ubuntu-latest
     steps:
     -
