@@ -30,7 +30,18 @@ RUN ./install_sancus.sh $SANCUS_SECURITY $SANCUS_KEY
 
 ## SGX attestation stuff ##
 COPY exec/ /bin/
-RUN apt-get update && apt-get install -y --no-install-recommends clang gcc-multilib \
-    && rm -rf /usr/src/install
+RUN apt-get update && apt-get install -y --no-install-recommends clang gcc-multilib
 
+## TrustZone ##
+WORKDIR /optee
+
+ENV PATH=$PATH:/optee/toolchains/aarch32/bin:/optee/toolchains/aarch64/bin \
+    OPTEE_OS=/optee/optee_os \
+    OPTEE_CLIENT=/optee/optee_client
+
+COPY scripts/install_trustzone.sh .
+RUN ./install_trustzone.sh
+
+# Cleanup
+RUN rm -rf /usr/src/install && rm /optee/install_trustzone.sh
 WORKDIR /usr/src/app
