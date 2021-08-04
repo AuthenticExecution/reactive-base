@@ -29,7 +29,7 @@ COPY scripts/install_sancus.sh .
 RUN ./install_sancus.sh $SANCUS_SECURITY $SANCUS_KEY
 
 ## SGX attestation stuff ##
-COPY exec/ /bin/
+COPY exec/sgx-attester /bin/
 RUN apt-get update && apt-get install -y --no-install-recommends clang gcc-multilib
 
 ## TrustZone ##
@@ -41,6 +41,9 @@ ENV PATH=$PATH:/optee/toolchains/aarch32/bin:/optee/toolchains/aarch64/bin \
 
 COPY scripts/install_trustzone.sh .
 RUN ./install_trustzone.sh
+
+## Attestation Manager stuff ##
+COPY exec/attman-cli /bin/
 
 # Cleanup
 RUN rm -rf /usr/src/install && rm /optee/install_trustzone.sh
