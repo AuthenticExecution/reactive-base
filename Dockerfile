@@ -28,10 +28,6 @@ ARG SANCUS_KEY=deadbeefcafebabec0defeeddefec8ed
 COPY scripts/install_sancus.sh .
 RUN ./install_sancus.sh $SANCUS_SECURITY $SANCUS_KEY
 
-## SGX attestation stuff ##
-COPY exec/sgx-attester /bin/
-RUN apt-get update && apt-get install -y --no-install-recommends clang gcc-multilib
-
 ## TrustZone ##
 WORKDIR /optee
 
@@ -42,9 +38,13 @@ ENV PATH=$PATH:/optee/toolchains/aarch32/bin:/optee/toolchains/aarch64/bin \
 COPY scripts/install_trustzone.sh .
 RUN ./install_trustzone.sh
 
-## Attestation Manager stuff ##
-COPY exec/attman-cli /bin/
+## SGX attestation & Attestation Manager stuff ##
+RUN apt-get update && apt-get install -y --no-install-recommends clang gcc-multilib
+COPY exec/ /bin/
 
 # Cleanup
-RUN rm -rf /usr/src/install && rm /optee/install_trustzone.sh
+RUN rm -rf /usr/src/install \
+    && rm /optee/install_trustzone.sh \
+    && rm -rf /var/lib/apt/lists/*
+    
 WORKDIR /usr/src/app
