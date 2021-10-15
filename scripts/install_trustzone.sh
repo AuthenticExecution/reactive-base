@@ -2,9 +2,6 @@
 
 set -eux
 
-# Prerequisites
-apt-get update && apt-get install -y --no-install-recommends python3-pycryptodome
-
 # toolchain
 git clone https://github.com/OP-TEE/build.git
 (cd build && make -f toolchain.mk -j2)
