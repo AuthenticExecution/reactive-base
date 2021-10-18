@@ -10,11 +10,7 @@ RUN echo "Europe/Brussels" > /etc/timezone && apt-get update && \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl python3.6 python3-distutils git make gcc libc6-dev wget \
     gpg pkg-config libssl-dev protobuf-compiler lsb-release screen unzip \
-    python3-pycryptodome clang gcc-multilib
-
-## Install latest cmake version ##
-COPY scripts/install_cmake.sh .
-RUN ./install_cmake.sh
+    python3-pycryptodome gcc-multilib cmake
 
 ## Python ##
 RUN echo -e '#!/bin/bash\npython3.6 "$@"' > /usr/bin/python && chmod +x /usr/bin/python \
@@ -53,6 +49,14 @@ RUN ./install_trustzone.sh
 
 ## SGX attestation & Attestation Manager stuff ##
 COPY exec/ /bin/
+
+## Install latest cmake version ##
+# This is needed for the rust_mbedtls library in order to compile
+# For some reason, this version breaks the installation of Sancus, so it has
+# to be installed later
+COPY scripts/install_cmake.sh .
+RUN ./install_cmake.sh
+
 
 # Cleanup
 RUN rm -rf /usr/src/install \
