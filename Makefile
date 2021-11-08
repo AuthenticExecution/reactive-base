@@ -1,4 +1,4 @@
-REPO      ?= gianlu33/reactive-base
+REPO      ?= authexec/reactive-base
 TAG       ?= latest
 
 PWD        = $(shell pwd)
@@ -18,7 +18,3 @@ push: login
 
 login:
 	docker login
-
-clean:
-	docker rm $(shell docker ps -a -q) 2> /dev/null || true
-	docker image prune -f
