@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ARG RUST_TOOLCHAIN=nightly-2021-12-01
+
 WORKDIR /usr/src/install
 
 ## Non-interactive ##
@@ -23,11 +25,11 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     PATH=/usr/local/cargo/bin:$PATH
 
 COPY scripts/install_rust.sh .
-RUN ./install_rust.sh
+RUN ./install_rust.sh $RUST_TOOLCHAIN
 
 ## EDP ##
 COPY scripts/install_edp.sh .
-RUN ./install_edp.sh
+RUN ./install_edp.sh $RUST_TOOLCHAIN
 
 ## Sancus ##
 ENV PYTHONPATH=\$PYTHONPATH:/usr/local/share/sancus-compiler/python/lib/

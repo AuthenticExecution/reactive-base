@@ -3,8 +3,8 @@
 set -eux
 
 # add target
-rustup default nightly
-rustup target add x86_64-fortanix-unknown-sgx --toolchain nightly
+rustup default $1
+rustup target add x86_64-fortanix-unknown-sgx --toolchain $1
 
 # Install utilities
 cargo install fortanix-sgx-tools sgxs-tools
