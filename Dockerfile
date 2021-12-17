@@ -49,9 +49,6 @@ ENV PATH=$PATH:/optee/toolchains/aarch32/bin:/optee/toolchains/aarch64/bin \
 COPY scripts/install_trustzone.sh .
 RUN ./install_trustzone.sh
 
-## SGX attestation & Attestation Manager stuff ##
-COPY exec/ /bin/
-
 ## Install latest cmake version ##
 # This is needed for the rust_mbedtls library in order to compile
 # For some reason, this version breaks the installation of Sancus, so it has
@@ -59,6 +56,9 @@ COPY exec/ /bin/
 COPY scripts/install_cmake.sh .
 RUN ./install_cmake.sh
 
+# Install sgx-attester and attman-cli
+RUN cargo install --git https://github.com/AuthenticExecution/sgx-attester.git \
+    && cargo install --git https://github.com/AuthenticExecution/attestation-manager-client.git
 
 # Cleanup
 RUN rm -rf /usr/src/install \
