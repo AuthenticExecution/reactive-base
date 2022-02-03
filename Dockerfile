@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pycryptodome gcc-multilib cmake python3-pip
 
 ## Python ##
-RUN ln -s /usr/bin/python3 /usr/bin/python
+RUN ln -s /usr/bin/python3 /usr/bin/python \
+    && ln -s /usr/bin/pip3 /usr/bin/pip
 
 ## Rust ##
 ENV RUSTUP_HOME=/usr/local/rustup \
