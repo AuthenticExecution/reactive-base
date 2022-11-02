@@ -12,7 +12,7 @@ RUN echo "Europe/Brussels" > /etc/timezone && apt-get update && \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl python3.6 python3-distutils git make gcc libc6-dev wget \
     gpg pkg-config libssl-dev protobuf-compiler lsb-release screen unzip \
-    python3-pycryptodome gcc-multilib cmake python3-pip python3-wheel
+    python3-pycryptodome gcc-multilib cmake python3-pip python3-wheel sudo
 
 ## Python ##
 RUN ln -s /usr/bin/python3 /usr/bin/python \
