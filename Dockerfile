@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ARG RUST_TOOLCHAIN=nightly-2022-10-01
+ARG RUST_TOOLCHAIN=nightly-2023-06-01
 
 WORKDIR /usr/src/install
 
